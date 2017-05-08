@@ -11889,11 +11889,13 @@ $$
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[22]:</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">readdlm</span><span class="p">(</span><span class="s">&quot;/home/juser/M230/hw3/A.txt&quot;</span><span class="p">,</span> <span class="sc">&#39;,&#39;</span><span class="p">);</span>
 <span class="n">U</span> <span class="o">=</span> <span class="n">readdlm</span><span class="p">(</span><span class="s">&quot;/home/juser/M230/hw3/U.txt&quot;</span><span class="p">,</span> <span class="sc">&#39;,&#39;</span><span class="p">);</span>
+<span class="n">As</span> <span class="o">=</span> <span class="n">sparse</span><span class="p">(</span><span class="n">A</span><span class="p">);</span>
+<span class="n">p</span> <span class="o">=</span> <span class="mf">0.85</span><span class="p">;</span>
 <span class="n">inedges</span> <span class="o">=</span> <span class="n">sum</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
 <span class="n">outedges</span> <span class="o">=</span> <span class="n">sum</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
 </pre></div>
@@ -12189,7 +12191,7 @@ $$<p>In our case we have $A = (I-P')$, $b=0$ and $x=\pi$.</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[24]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="k">function</span><span class="nf"> pr_jacobi</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
@@ -12209,14 +12211,19 @@ $$<p>In our case we have $A = (I-P')$, $b=0$ and $x=\pi$.</p>
     <span class="c"># init</span>
     <span class="n">I</span> <span class="o">=</span> <span class="n">sparse</span><span class="p">(</span><span class="n">eye</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
     <span class="n">I_P</span> <span class="o">=</span> <span class="p">(</span><span class="n">I</span> <span class="o">-</span> <span class="n">P</span><span class="o">&#39;</span><span class="p">)</span>
-    <span class="n">R</span> <span class="o">=</span> <span class="n">I_P</span> <span class="o">-</span> <span class="n">diagm</span><span class="p">(</span><span class="n">diag</span><span class="p">(</span><span class="n">I_P</span><span class="p">))</span> <span class="c"># todo we lose sparisty here, slow</span>
+    <span class="c"># R = I_P - diagm(diag(I_P)) # we lose sparisty here, slow</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">ones</span><span class="p">(</span><span class="n">n</span> <span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">./</span> <span class="n">n</span>
     <span class="n">D</span> <span class="o">=</span> <span class="n">diag</span><span class="p">(</span><span class="n">I_P</span><span class="p">)</span>
     
     <span class="c"># jacobi</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="mi">1000</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="mi">100</span>
         <span class="n">x_prev</span> <span class="o">=</span> <span class="n">x</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">R</span><span class="o">*</span><span class="n">x</span><span class="p">)</span> <span class="o">./</span> <span class="n">D</span>
+        <span class="c"># x = ( -R*x ) ./ D</span>
+        <span class="c"># x = ( -((I - P&#39;)  - diagm(diag(I_P)))*x ) ./ D</span>
+        <span class="c"># x = ( -((I - P&#39;)  - diagm(D))*x ) ./ D</span>
+        <span class="c"># x = ( -(I - P&#39;)*x + diagm(D)*x ) ./ D</span>
+        <span class="c"># x = -Ix ./ D + P&#39;x ./ D + diagm(D)*x ./ D</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="o">-</span><span class="n">x</span> <span class="o">./</span> <span class="n">D</span> <span class="o">+</span> <span class="p">(</span><span class="n">P</span><span class="o">&#39;*</span><span class="n">x</span><span class="p">)</span> <span class="o">./</span> <span class="n">D</span> <span class="o">+</span> <span class="n">x</span>
         <span class="n">l1</span> <span class="o">=</span> <span class="n">sum</span><span class="p">(</span><span class="n">abs</span><span class="p">(</span><span class="n">x_prev</span> <span class="o">-</span> <span class="n">x</span><span class="p">))</span>
         <span class="c">#if i % 10 == 0</span>
         <span class="c">#    println(string(l1))</span>
@@ -12241,12 +12248,12 @@ $$<p>In our case we have $A = (I-P')$, $b=0$ and $x=\pi$.</p>
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>WARNING: Method definition pr_jacobi(Any, Any) in module Main at In[15]:3 overwritten at In[24]:3.
+<pre>WARNING: Method definition pr_jacobi(Any, Any) in module Main at In[7]:3 overwritten at In[9]:3.
 </pre>
 </div>
 </div>
 
-<div class="output_area"><div class="prompt output_prompt">Out[24]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[9]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -12340,7 +12347,7 @@ $$<p>In our case we have $A = (I-P')$, $b=0$ and $x=\pi$.</p>
     <span class="n">x</span> <span class="o">=</span> <span class="n">ones</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="o">./</span> <span class="n">n</span>
     
     <span class="c"># power</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="mi">1000</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="mi">100</span>
         <span class="n">x_prev</span> <span class="o">=</span> <span class="n">x</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">RA</span> <span class="o">+</span> <span class="n">sum</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">q</span><span class="p">)</span>
         <span class="n">x</span> <span class="o">./=</span> <span class="n">norm</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
@@ -12392,36 +12399,6 @@ $$<p>In our case we have $A = (I-P')$, $b=0$ and $x=\pi$.</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[27]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-julia"><pre><span></span><span class="n">As</span> <span class="o">=</span> <span class="n">sparse</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
-<span class="n">p</span> <span class="o">=</span> <span class="mf">0.85</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">Out[27]:</div>
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>0.85</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
 <div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
@@ -12461,7 +12438,7 @@ $$<p>In our case we have $A = (I-P')$, $b=0$ and $x=\pi$.</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">sort</span><span class="p">(</span><span class="n">pr_jacobi</span><span class="p">(</span><span class="n">As</span><span class="p">,</span> <span class="n">p</span><span class="p">),</span> <span class="n">rev</span><span class="o">=</span><span class="n">true</span><span class="p">)[</span><span class="mi">1</span><span class="p">:</span><span class="mi">10</span><span class="p">]</span>
@@ -12475,7 +12452,7 @@ $$<p>In our case we have $A = (I-P')$, $b=0$ and $x=\pi$.</p>
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[16]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[10]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -12588,7 +12565,7 @@ $$<p>In our case we have $A = (I-P')$, $b=0$ and $x=\pi$.</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="k">using</span> <span class="n">BenchmarkTools</span>
@@ -12640,7 +12617,7 @@ $$<p>In our case we have $A = (I-P')$, $b=0$ and $x=\pi$.</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[29]:</div>
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="p">@</span><span class="n">benchmark</span> <span class="n">pr_jacobi</span><span class="p">(</span><span class="n">As</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
@@ -12654,20 +12631,20 @@ $$<p>In our case we have $A = (I-P')$, $b=0$ and $x=\pi$.</p>
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[29]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[13]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
 <pre>BenchmarkTools.Trial: 
-  memory estimate:  649.08 MiB
-  allocs estimate:  37235455
+  memory estimate:  306.53 MiB
+  allocs estimate:  19375553
   --------------
-  minimum time:     49.096 s (1.36% GC)
-  median time:      49.096 s (1.36% GC)
-  mean time:        49.096 s (1.36% GC)
-  maximum time:     49.096 s (1.36% GC)
+  minimum time:     3.546 s (0.00% GC)
+  median time:      3.571 s (0.00% GC)
+  mean time:        3.571 s (0.00% GC)
+  maximum time:     3.595 s (0.00% GC)
   --------------
-  samples:          1
+  samples:          2
   evals/sample:     1</pre>
 </div>
 
