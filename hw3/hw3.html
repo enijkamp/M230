@@ -11872,8 +11872,9 @@ $$
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Let $P=(p_{ij})$ denote $\vert\Omega\vert\times\vert\Omega\vert$ transition matrix where $p_{ij} = P(x_{t+1}=j\vert x_t=i)$ with transition $i \rightarrow j$ for a Markov chain on $\Omega$ as stochastic process $\{X_0,X_1,\ldots,X_n\}$.</p>
 <p>We assume $P$ is irreducable and aperiodic, that is the chain is ergodic. We observe $P$ is a non-negative row-stochastic matrix $P\cdot1=1$.</p>
-<p>Then the fundamental theorem of Markov Chains states that there exists a unique stationary distribution $\pi$ as left-eigenvector such that $\pi^TP=\pi$ with spectral radius $\rho(P) = \max \left \{ |\lambda_1|, \cdots, |\lambda_n| \right \} = 1$. We omit the proof which is a direct consequence of the Perron-Frobenius theorem.</p>
-<p>We formulate the above as classical eigen-value problem $P\pi=\lambda\pi$ which can be equivalently stated as $(P-\lambda I)\pi = 0.$ In our case, we obtain the linear system $(I-P^T)\pi = 0$. Observe $P\cdot1=1$ causes $\det(I-P^T)=0$ since the rows are not linearly independent or equivalently the sum of each column is zero. Since $\pi$ must be a probability distribution, we can further constraint the system with $\sum_i\pi_i=1$.</p>
+<p>Then the fundamental theorem of Markov Chains states that there exists a unique stationary distribution $\pi$ as left-eigenvector such that $\pi P=\pi$ with spectral radius $\rho(P) = \max \left \{ |\lambda_1|, \cdots, |\lambda_n| \right \} = 1$. We omit the proof which is a direct consequence of the Perron-Frobenius theorem.</p>
+<p>We formulate the above as left eigen-value problem $\pi P=\pi\lambda$ as $P^T\pi^T=\lambda\pi^T$ which can be equivalently stated as $(P^T-\lambda I)\pi^T = 0.$ In our case, we want to solve for $\lambda=1$ with stationary distribution $\pi$ and we obtain the linear system</p>
+$$(P^T - I)\pi^T = 0.$$<p>Observe $P\cdot1=1$ causes $\det(P^T-I)=0$ since the rows are not linearly independent or equivalently the sum of each column is zero. Since $\pi$ must be a probability distribution, we can further constraint the system with $\sum_i\pi_i=1$.</p>
 
 </div>
 </div>
