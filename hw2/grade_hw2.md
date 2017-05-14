@@ -29,7 +29,7 @@
   	
 	* Code chunk 1, function `e3`: Matrix multiplication is the major computation as you noticed. But the two matrix multiplications can be merged into a single one, cutting computational cost by half. We can simplify the `E` matrix as
 	
-	$$\mathbf{E} = \frac 12 \mathbf{X} \mathbf{X}^T - \frac 12 \mathbf{X} \mathbf{1}_m \mathbf{1}_n^T - \frac 12 \mathbf{1}_n \mathbf{1}_m^T \mathbf{X}^T + m \mathbf{1}_{n \times n}.$$
+		$\mathbf{E} = \frac 12 \mathbf{X} \mathbf{X}^T - \frac 12 \mathbf{X} \mathbf{1}_m \mathbf{1}_n^T - \frac 12 \mathbf{1}_n \mathbf{1}_m^T \mathbf{X}^T + m \mathbf{1}_{n \times n}.$
 	
 	* Code chunk 1, function `e3`: Because `X * X'` is symmetric, compuation can be saved using BLAS-3 function `BLAS.syrk`. 
 	* Code chunk 8, line 5-6: Calcuation of `p` and `sum_p` can be achieved by a single double-loop.  
