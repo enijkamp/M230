@@ -1,6 +1,6 @@
 *Eric Nijkamp* 
 
-### Overall Grade: ??/100
+### Overall Grade: 79/100
 
 ### Quality of report: 8/10
 
@@ -16,7 +16,7 @@
 
 	Yes. `ipynb`.
 
-* Is the report clear (whole sentences, typos, grammar)? Do readers have a clear idea what's going on and how are results produced by just reading the report? (-2 pt)
+* Is the report clear (whole sentences, typos, grammar)? Do readers have a clear idea what's going on and how are results produced by just reading the report? (-2 pts)
 
 	 Need more description of the question and explanation of your solutions and algorithmic choices, esp Q1 and Q3. One year later can you still remember what you are doing by just reading your report? Some details can be improved. E.g., boldface matrices and vectors in LaTeX.
 	 
@@ -27,10 +27,7 @@
 
 	 It's good you do sanity check for the correctness of `kinship` function. Dr. Zhou's implementation has memory allocation 7.64MB, while yours is 198.67MB. There is a lot of room for improving efficiency. Some comments: 
   	
-	* Code chunk 1, function `e3`: Matrix multiplication is the major computation as you noticed. But the two matrix multiplications can be merged into a single one, cutting computational cost by half. We can simplify the `E` matrix as
-	
-		$\mathbf{E} = \frac 12 \mathbf{X} \mathbf{X}^T - \frac 12 \mathbf{X} \mathbf{1}_m \mathbf{1}_n^T - \frac 12 \mathbf{1}_n \mathbf{1}_m^T \mathbf{X}^T + m \mathbf{1}_{n \times n}.$
-	
+	* Code chunk 1, function `e3`: Matrix multiplication is the major computation as you noticed. But the two matrix multiplications can be merged into a single one, cutting computational cost by half. 	
 	* Code chunk 1, function `e3`: Because `X * X'` is symmetric, compuation can be saved using BLAS-3 function `BLAS.syrk`. 
 	* Code chunk 8, line 5-6: Calcuation of `p` and `sum_p` can be achieved by a single double-loop.  
 	* Do check your solution against the Dr. Zhou's solution sketch to understand why. 
