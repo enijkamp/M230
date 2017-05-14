@@ -28,11 +28,9 @@
 	 It's good you do sanity check for the correctness of `kinship` function. Dr. Zhou's implementation has memory allocation 7.64MB, while yours is 198.67MB. There is a lot of room for improving efficiency. Some comments: 
   	
 	* Code chunk 1, function `e3`: Matrix multiplication is the major computation as you noticed. But the two matrix multiplications can be merged into a single one, cutting computational cost by half. We can simplify the `E` matrix as
-	$$
-\begin{eqnarray*}
-    \mathbf{E} &=& \frac 12 \mathbf{X} \mathbf{X}^T - \frac 12 \mathbf{X} \mathbf{1}_m \mathbf{1}_n^T - \frac 12 \mathbf{1}_n \mathbf{1}_m^T \mathbf{X}^T + m \mathbf{1}_{n \times n}.
-\end{eqnarray*}
-$$
+	
+	$$\mathbf{E} = \frac 12 \mathbf{X} \mathbf{X}^T - \frac 12 \mathbf{X} \mathbf{1}_m \mathbf{1}_n^T - \frac 12 \mathbf{1}_n \mathbf{1}_m^T \mathbf{X}^T + m \mathbf{1}_{n \times n}.$$
+	
 	* Code chunk 1, function `e3`: Because `X * X'` is symmetric, compuation can be saved using BLAS-3 function `BLAS.syrk`. 
 	* Code chunk 8, line 5-6: Calcuation of `p` and `sum_p` can be achieved by a single double-loop.  
 	* Do check your solution against the Dr. Zhou's solution sketch to understand why. 
