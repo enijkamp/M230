@@ -1,6 +1,6 @@
 *Eric Nijkamp* 
 
-### Overall Grade: 79/100
+### Overall Grade: 81/100
 
 ### Quality of report: 8/10
 
@@ -8,11 +8,11 @@
 
 	Yes. `2017-05-02 18:15:33 -0700`.
 	
-* Is the final report in a human readable format html? (no html: -2 pts)
+* Is the final report in a human readable format html? 
 
 	Yes. `html`.
 
-* Is the report prepared as a dynamic document (Jupyter notebook) for better reproducibility? (no .ipynb: -1pts) 
+* Is the report prepared as a dynamic document (Jupyter notebook) for better reproducibility? 
 
 	Yes. `ipynb`.
 
@@ -40,12 +40,12 @@
 
 * Q3 (15/20) 
  
- 	Dr. Zhou's implementation has memory allocation 3.09KB, while yours is 122.39KB. Some places for improvement:   
-	* Code chunk 13, last expression: You may separate `sumabs2(sigmachol[:L] \ y)` into parts.  
+ 	Dr. Zhou's implementation has memory allocation 3.09KB, while yours is 122.39MB. There is a lot of room for improvement:   
+ 	* Utilize the Woodbury formula and the determinant formula in Question 2. 
 	* Do check your solutions against Dr. Zhou's implementation and understand why.
 
 
-### Usage of Git: 8/10
+### Usage of Git: 10/10
 
 * Are branches (`master` and `develop`) correctly set up? Is the hw submission put into the `master` branch?
 
@@ -65,7 +65,7 @@
 
 	Yes.
 
-* Do not put a lot auxillary files into version control. (-2 pts)  
+* Do not put a lot auxillary files into version control. (Giving you 2 points back since you did not get feedback on homework 1 after submitting homework 2.)  
 
 	Make sure to exclude all those hidden `.ipynb_checkpoints` folders from version control. These folders hold auxillary files created by Jupyter. Put a line `*/.ipynb_checkpoints` in the `.gitignore` file.
 	
