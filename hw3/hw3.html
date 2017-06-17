@@ -11775,7 +11775,6 @@ div#notebook {
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Biostat-M280-HW3">Biostat M280 HW3<a class="anchor-link" href="#Biostat-M280-HW3">&#182;</a></h2><p>Due 05/19</p>
-<p>Julia Cheatsheet <a href="https://cheatsheets.quantecon.org/julia-cheatsheet.html">https://cheatsheets.quantecon.org/julia-cheatsheet.html</a></p>
 
 </div>
 </div>
@@ -11893,12 +11892,12 @@ $$(P^T - I)\pi^T = 0.$$<p>Observe $P\cdot1=1$ causes $\det(P^T-I)=0$ since the r
 <div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-julia"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">readdlm</span><span class="p">(</span><span class="s">&quot;/home/juser/M230/hw3/A.txt&quot;</span><span class="p">,</span> <span class="sc">&#39;,&#39;</span><span class="p">);</span>
-<span class="n">U</span> <span class="o">=</span> <span class="n">readdlm</span><span class="p">(</span><span class="s">&quot;/home/juser/M230/hw3/U.txt&quot;</span><span class="p">,</span> <span class="sc">&#39;,&#39;</span><span class="p">);</span>
+<div class=" highlight hl-julia"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">readdlm</span><span class="p">(</span><span class="s">&quot;A.txt&quot;</span><span class="p">,</span> <span class="sc">&#39;,&#39;</span><span class="p">);</span>
+<span class="n">U</span> <span class="o">=</span> <span class="n">readdlm</span><span class="p">(</span><span class="s">&quot;U.txt&quot;</span><span class="p">,</span> <span class="sc">&#39;,&#39;</span><span class="p">);</span>
 <span class="n">As</span> <span class="o">=</span> <span class="n">sparse</span><span class="p">(</span><span class="n">A</span><span class="p">);</span>
 <span class="n">p</span> <span class="o">=</span> <span class="mf">0.85</span><span class="p">;</span>
-<span class="n">inedges</span> <span class="o">=</span> <span class="n">sum</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
-<span class="n">outedges</span> <span class="o">=</span> <span class="n">sum</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+<span class="n">inedges</span> <span class="o">=</span> <span class="n">sum</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+<span class="n">outedges</span> <span class="o">=</span> <span class="n">sum</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
 </pre></div>
 
 </div>
@@ -12117,8 +12116,8 @@ $$(P^T - I)\pi^T = 0.$$<p>Observe $P\cdot1=1$ causes $\det(P^T-I)=0$ since the r
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="k">function</span><span class="nf"> pr_lu</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
     <span class="c"># matrices</span>
-    <span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">n</span><span class="p">)</span> <span class="o">=</span> <span class="n">size</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
-    <span class="n">r</span> <span class="o">=</span> <span class="n">sum</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+    <span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="o">=</span> <span class="n">size</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">sum</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
     <span class="n">q</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">n</span> <span class="o">*</span> <span class="p">[</span><span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">?</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">p</span><span class="p">)</span> <span class="p">:</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">]</span>
     <span class="n">r_tilde</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">?</span> <span class="p">(</span><span class="n">p</span> <span class="o">/</span> <span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="p">:</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">]</span>
     <span class="n">RA</span> <span class="o">=</span> <span class="n">r_tilde</span> <span class="o">.*</span> <span class="n">A</span>
@@ -12133,7 +12132,7 @@ $$(P^T - I)\pi^T = 0.$$<p>Observe $P\cdot1=1$ causes $\det(P^T-I)=0$ since the r
     <span class="n">I</span> <span class="o">=</span> <span class="n">sparse</span><span class="p">(</span><span class="n">eye</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
     <span class="n">I_P</span> <span class="o">=</span> <span class="p">(</span><span class="n">I</span> <span class="o">-</span> <span class="n">P</span><span class="o">&#39;</span><span class="p">)</span>
     <span class="n">I_P</span><span class="p">[</span><span class="mi">1</span><span class="p">,:]</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="n">b</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">;</span> <span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)]</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">;</span> <span class="n">zeros</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)]</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">lufact</span><span class="p">(</span><span class="n">I_P</span><span class="p">)</span> \ <span class="n">b</span>
     <span class="k">return</span> <span class="n">vec</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="k">end</span>
@@ -12192,15 +12191,15 @@ $$<p>In our case we have $A = (I-P')$, $b=0$ and $x=\pi$.</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="k">function</span><span class="nf"> pr_jacobi</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
     <span class="c"># matrices</span>
-    <span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">n</span><span class="p">)</span> <span class="o">=</span> <span class="n">size</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
-    <span class="n">r</span> <span class="o">=</span> <span class="n">sum</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
-    <span class="n">q</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">n</span> <span class="o">*</span> <span class="p">[</span><span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">?</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">p</span><span class="p">)</span> <span class="p">:</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">]</span>
-    <span class="n">r_tilde</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">?</span> <span class="p">(</span><span class="n">p</span> <span class="o">/</span> <span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="p">:</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">]</span>
+    <span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="o">=</span> <span class="n">size</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">sum</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">n</span> <span class="o">*</span> <span class="p">[</span><span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">?</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">p</span><span class="p">)</span> <span class="p">:</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">]</span>
+    <span class="n">r_tilde</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">?</span> <span class="p">(</span><span class="n">p</span> <span class="o">/</span> <span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="p">:</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">]</span>
     <span class="n">RA</span> <span class="o">=</span> <span class="n">r_tilde</span> <span class="o">.*</span> <span class="n">A</span>
     <span class="n">P</span> <span class="o">=</span> <span class="n">RA</span> <span class="o">.+</span> <span class="n">q</span>
     
@@ -12220,16 +12219,23 @@ $$<p>In our case we have $A = (I-P')$, $b=0$ and $x=\pi$.</p>
     <span class="c"># jacobi</span>
     <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="mi">100</span>
         <span class="n">x_prev</span> <span class="o">=</span> <span class="n">x</span>
+        
+        <span class="c"># derivation to increase efficiency</span>
         <span class="c"># x = ( -R*x ) ./ D</span>
         <span class="c"># x = ( -((I - P&#39;)  - diagm(diag(I_P)))*x ) ./ D</span>
         <span class="c"># x = ( -((I - P&#39;)  - diagm(D))*x ) ./ D</span>
         <span class="c"># x = ( -(I - P&#39;)*x + diagm(D)*x ) ./ D</span>
         <span class="c"># x = -Ix ./ D + P&#39;x ./ D + diagm(D)*x ./ D</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="o">-</span><span class="n">x</span> <span class="o">./</span> <span class="n">D</span> <span class="o">+</span> <span class="p">(</span><span class="n">P</span><span class="o">&#39;*</span><span class="n">x</span><span class="p">)</span> <span class="o">./</span> <span class="n">D</span> <span class="o">+</span> <span class="n">x</span>
+        <span class="c"># x = -x ./ D + (P&#39;*x) ./ D + x  </span>
+        
+        <span class="c"># reduce memory allocation by avoiding (P = RA .+ q)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="o">-</span><span class="n">x</span> <span class="o">./</span> <span class="n">D</span> <span class="o">+</span> <span class="p">(</span><span class="n">RA</span><span class="o">&#39;</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span> <span class="o">./</span> <span class="n">D</span> <span class="o">+</span> <span class="p">(</span><span class="n">q</span><span class="o">&#39;</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span> <span class="o">./</span> <span class="n">D</span> <span class="o">+</span> <span class="n">x</span> 
         <span class="n">l1</span> <span class="o">=</span> <span class="n">sum</span><span class="p">(</span><span class="n">abs</span><span class="p">(</span><span class="n">x_prev</span> <span class="o">-</span> <span class="n">x</span><span class="p">))</span>
+        
         <span class="c">#if i % 10 == 0</span>
         <span class="c">#    println(string(l1))</span>
         <span class="c">#end</span>
+        
         <span class="k">if</span><span class="p">(</span><span class="n">l1</span> <span class="o">&lt;</span> <span class="mf">1e-7</span><span class="p">)</span>
             <span class="k">break</span>
         <span class="k">end</span>
@@ -12250,12 +12256,12 @@ $$<p>In our case we have $A = (I-P')$, $b=0$ and $x=\pi$.</p>
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>WARNING: Method definition pr_jacobi(Any, Any) in module Main at In[3]:3 overwritten at In[8]:3.
+<pre>WARNING: Method definition pr_jacobi(Any, Any) in module Main at In[13]:3 overwritten at In[22]:3.
 </pre>
 </div>
 </div>
 
-<div class="output_area"><div class="prompt output_prompt">Out[8]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[22]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -12285,15 +12291,15 @@ $$<p>In our case we have $A = (I-P')$, $b=0$ and $x=\pi$.</p>
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="k">function</span><span class="nf"> pr_dense_eig</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
     <span class="c"># matrices</span>
-    <span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">n</span><span class="p">)</span> <span class="o">=</span> <span class="n">size</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
-    <span class="n">r</span> <span class="o">=</span> <span class="n">sum</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
-    <span class="n">q</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">n</span> <span class="o">*</span> <span class="p">[</span><span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">?</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">p</span><span class="p">)</span> <span class="p">:</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">]</span>
-    <span class="n">r_tilde</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">?</span> <span class="p">(</span><span class="n">p</span> <span class="o">/</span> <span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="p">:</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">]</span>
+    <span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="o">=</span> <span class="n">size</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">sum</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">n</span> <span class="o">*</span> <span class="p">[</span><span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">?</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">p</span><span class="p">)</span> <span class="p">:</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">]</span>
+    <span class="n">r_tilde</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">?</span> <span class="p">(</span><span class="n">p</span> <span class="o">/</span> <span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="p">:</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">]</span>
     <span class="n">RA</span> <span class="o">=</span> <span class="n">r_tilde</span> <span class="o">.*</span> <span class="n">A</span>
     <span class="n">P</span> <span class="o">=</span> <span class="n">RA</span> <span class="o">.+</span> <span class="n">q</span>
     
     <span class="c"># solve</span>
-    <span class="p">(</span><span class="n">eig_d</span><span class="p">,</span><span class="n">eig_v</span><span class="p">)</span> <span class="o">=</span> <span class="n">eig</span><span class="p">(</span><span class="n">P</span><span class="o">&#39;</span><span class="p">)</span>
+    <span class="p">(</span><span class="n">eig_d</span><span class="p">,</span> <span class="n">eig_v</span><span class="p">)</span> <span class="o">=</span> <span class="n">eig</span><span class="p">(</span><span class="n">P</span><span class="o">&#39;</span><span class="p">)</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">real</span><span class="p">(</span><span class="n">eig_v</span><span class="p">[:,</span> <span class="n">indmax</span><span class="p">(</span><span class="n">real</span><span class="p">(</span><span class="n">eig_d</span><span class="p">))])</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">abs</span><span class="p">(</span><span class="n">x</span> <span class="o">/</span> <span class="n">sum</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
     
@@ -12339,10 +12345,10 @@ $$<p>In our case we have $A = (I-P')$, $b=0$ and $x=\pi$.</p>
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="k">function</span><span class="nf"> pr_power</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
     <span class="c"># matrices</span>
-    <span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">n</span><span class="p">)</span> <span class="o">=</span> <span class="n">size</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
-    <span class="n">r</span> <span class="o">=</span> <span class="n">sum</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
-    <span class="n">q</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">n</span> <span class="o">*</span> <span class="p">[</span><span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">?</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">p</span><span class="p">)</span> <span class="p">:</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">]</span>
-    <span class="n">r_tilde</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">?</span> <span class="p">(</span><span class="n">p</span> <span class="o">/</span> <span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="p">:</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">]</span>
+    <span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="o">=</span> <span class="n">size</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">sum</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">n</span> <span class="o">*</span> <span class="p">[</span><span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">?</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">p</span><span class="p">)</span> <span class="p">:</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">]</span>
+    <span class="n">r_tilde</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">?</span> <span class="p">(</span><span class="n">p</span> <span class="o">/</span> <span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="p">:</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">]</span>
     <span class="n">RA</span> <span class="o">=</span> <span class="n">r_tilde</span> <span class="o">.*</span> <span class="n">A</span>
     
     <span class="c"># init</span>
@@ -12440,7 +12446,7 @@ $$<p>In our case we have $A = (I-P')$, $b=0$ and $x=\pi$.</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">sort</span><span class="p">(</span><span class="n">pr_jacobi</span><span class="p">(</span><span class="n">As</span><span class="p">,</span> <span class="n">p</span><span class="p">),</span> <span class="n">rev</span><span class="o">=</span><span class="n">true</span><span class="p">)[</span><span class="mi">1</span><span class="p">:</span><span class="mi">10</span><span class="p">]</span>
@@ -12454,7 +12460,7 @@ $$<p>In our case we have $A = (I-P')$, $b=0$ and $x=\pi$.</p>
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[4]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[23]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -12567,7 +12573,7 @@ $$<p>In our case we have $A = (I-P')$, $b=0$ and $x=\pi$.</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="k">using</span> <span class="n">BenchmarkTools</span>
@@ -12619,7 +12625,7 @@ $$<p>In our case we have $A = (I-P')$, $b=0$ and $x=\pi$.</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[24]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="p">@</span><span class="n">benchmark</span> <span class="n">pr_jacobi</span><span class="p">(</span><span class="n">As</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
@@ -12633,18 +12639,18 @@ $$<p>In our case we have $A = (I-P')$, $b=0$ and $x=\pi$.</p>
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[9]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[24]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
 <pre>BenchmarkTools.Trial: 
-  memory estimate:  289.36 MiB
-  allocs estimate:  18626034
+  memory estimate:  35.29 MiB
+  allocs estimate:  1842281
   --------------
-  minimum time:     2.381 s (0.00% GC)
-  median time:      2.394 s (0.00% GC)
-  mean time:        2.394 s (0.00% GC)
-  maximum time:     2.406 s (0.00% GC)
+  minimum time:     2.012 s (0.00% GC)
+  median time:      2.018 s (0.00% GC)
+  mean time:        2.024 s (0.00% GC)
+  maximum time:     2.042 s (0.00% GC)
   --------------
   samples:          3
   evals/sample:     1</pre>
